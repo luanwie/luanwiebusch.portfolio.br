@@ -1,0 +1,2273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luan Wiebusch — Web Designer & No-Code Developer</title>
+    <meta name="description"
+        content="Web designer and no-code developer building high-converting websites, landing pages and SaaS platforms. Available for freelance worldwide.">
+    <meta property="og:title" content="Luan Wiebusch — Web Designer & No-Code Developer">
+    <meta property="og:description" content="Websites and landing pages that convert. From design to deployment.">
+    <meta name="theme-color" content="#080808">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Syne:wght@400;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            /* Visual Identity Colors */
+            --bg: #080808;
+            --purple: #9b5cff;
+            --purple-glow: #b97dff;
+            --purple-dim: rgba(155, 92, 255, 0.12);
+            --purple-border: rgba(155, 92, 255, 0.25);
+            --white: #ffffff;
+            --text-body: rgba(255, 255, 255, 0.82);
+            --text-muted: rgba(255, 255, 255, 0.38);
+            --surface-card: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.07);
+
+            /* Typography & Layout Variables */
+            --font-display: 'Syne', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+            --radius-card: 14px;
+            --radius-pill: 100px;
+            --transition: 0.25s ease;
+        }
+
+        /* Global Reset & Base Styles */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--white);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            cursor: none;
+            /* Hide default cursor */
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        a,
+        button {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Animated Particle Canvas */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            transform: translateZ(0);
+            /* Force GPU compositing */
+        }
+
+        /* App Layout Container */
+        #app {
+            position: relative;
+            z-index: 1;
+            /* Keep content above canvas */
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Temporary Foundation Message */
+        .temp-message {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--white);
+            text-align: center;
+        }
+
+        /* Custom Cursor Elements */
+        .cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 10px;
+            height: 10px;
+            background-color: var(--purple);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: screen;
+            /* Use width/height transition for scaling without transform lag */
+            transform: translate(-50%, -50%);
+            transition: width 0.15s ease-out, height 0.15s ease-out;
+        }
+
+        .cursor-ring {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 36px;
+            height: 36px;
+            border: 1px solid var(--purple-border);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            /* Use width/height transition for scaling without transform lag */
+            transform: translate(-50%, -50%);
+            transition: width 0.15s ease-out, height 0.15s ease-out;
+        }
+
+        /* Hide cursor completely on touch devices */
+        @media (pointer: coarse) {
+            body {
+                cursor: auto;
+            }
+
+            .cursor,
+            .cursor-ring {
+                display: none !important;
+            }
+        }
+
+        /* Cursor Hover Utility Classes applied to Body */
+        body.hovering .cursor {
+            /* 10px * 1.5 = 15px */
+            width: 15px;
+            height: 15px;
+        }
+
+        body.hovering .cursor-ring {
+            /* 36px * 0.6 = 21.6px */
+            width: 21.6px;
+            height: 21.6px;
+        }
+
+        /* Scroll Reveal Utility */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.92);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-scale.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Delay Variants */
+        .delay-1 {
+            transition-delay: 0.12s;
+        }
+
+        .delay-2 {
+            transition-delay: 0.24s;
+        }
+
+        .delay-3 {
+            transition-delay: 0.36s;
+        }
+
+        .delay-4 {
+            transition-delay: 0.48s;
+        }
+
+        /* Section Label Component */
+        .section-label {
+            font-size: 0.68rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--purple);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: var(--font-body);
+            font-weight: 500;
+        }
+
+        .section-label::after {
+            content: '';
+            width: 48px;
+            height: 1px;
+            background-color: var(--purple-border);
+            display: block;
+        }
+
+        /* Intro Screen */
+        #intro {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background-color: var(--bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        #intro.exiting {
+            opacity: 0;
+            transform: scale(1.04);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .intro-bg-gradient {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(155, 92, 255, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .intro-headline {
+            font-family: var(--font-display);
+            font-weight: 300;
+            font-size: clamp(2.8rem, 6vw, 5.5rem);
+            color: var(--white);
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 1s ease forwards;
+            animation-delay: 0.4s;
+            position: relative;
+            z-index: 2;
+        }
+
+        @media (max-width: 639px) {
+            .intro-headline {
+                font-size: clamp(2rem, 8vw, 3rem);
+            }
+        }
+
+        .intro-btn {
+            width: 68px;
+            height: 68px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 1s ease forwards;
+            animation-delay: 0.8s;
+            transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            z-index: 2;
+        }
+
+        #intro:hover .intro-btn {
+            border-color: var(--purple);
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(155, 92, 255, 0.3);
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Cinema Sweep Line */
+        .cinema-line {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--purple), var(--purple-glow), transparent);
+            z-index: 99;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .cinema-line.active {
+            animation: lineSweep 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes lineSweep {
+            0% {
+                left: -100%;
+                opacity: 1;
+            }
+
+            60% {
+                left: 0%;
+                opacity: 1;
+            }
+
+            100% {
+                left: 100%;
+                opacity: 0;
+            }
+        }
+
+        /* Main Content Wrapper */
+        #main-content {
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            width: 100%;
+        }
+
+        #main-content.visible {
+            opacity: 1;
+        }
+
+        /* ------------------------------------- */
+        /* NAVBAR                                */
+        /* ------------------------------------- */
+        #navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            padding: 1.6rem 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(to bottom, rgba(8, 8, 8, 0.92) 0%, transparent 100%);
+            backdrop-filter: blur(0);
+            transition: padding 0.3s ease;
+        }
+
+        #navbar.scrolled {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        .nav-logo {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 1rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--white);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            transition: color 0.2s;
+            position: relative;
+            text-decoration: none;
+        }
+
+        .nav-links a:hover {
+            color: var(--white);
+        }
+
+        .nav-links a.active {
+            color: var(--white);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--purple);
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .nav-cta {
+            font-size: 0.78rem;
+            letter-spacing: 0.06em;
+            padding: 0.55rem 1.4rem;
+            border: 1px solid var(--purple-border);
+            border-radius: var(--radius-pill);
+            color: var(--white);
+            background: var(--purple-dim);
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .nav-cta:hover {
+            background: rgba(155, 92, 255, 0.22);
+            border-color: var(--purple);
+        }
+
+        /* ------------------------------------- */
+        /* HERO SECTION                          */
+        /* ------------------------------------- */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 10rem 4rem 6rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-video-wrap {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .hero-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            opacity: 0.22;
+        }
+
+        .hero-video-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom,
+                    rgba(8, 8, 8, 0.3) 0%,
+                    rgba(8, 8, 8, 0.1) 40%,
+                    rgba(8, 8, 8, 0.5) 75%,
+                    rgba(8, 8, 8, 1) 100%);
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes heroSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(60px);
+                filter: blur(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0px);
+            }
+        }
+
+        @keyframes heroNameReveal {
+            from {
+                opacity: 0;
+                transform: translateY(80px) skewY(3deg);
+                filter: blur(4px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) skewY(0deg);
+                filter: blur(0px);
+            }
+        }
+
+        .hero-tag {
+            font-size: 0.72rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--purple-glow);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 2rem;
+            animation: heroSlideUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+        }
+
+        .hero-tag::before {
+            content: '';
+            width: 28px;
+            height: 1px;
+            background: var(--purple);
+            display: block;
+        }
+
+        .hero-name {
+            display: block;
+            width: 100%;
+            overflow: hidden;
+            font-family: var(--font-display);
+            font-size: clamp(2.8rem, 9.5vw, 11rem);
+            font-weight: 800;
+            line-height: 0.88;
+            letter-spacing: -0.03em;
+            text-transform: uppercase;
+            margin-bottom: 2.5rem;
+        }
+
+        .name-line {
+            white-space: nowrap;
+            width: 100%;
+            display: block;
+            font-size: clamp(2.8rem, 9.5vw, 11rem);
+            position: relative;
+        }
+
+        .name-line:first-child {
+            animation: heroNameReveal 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+        }
+
+        .name-line.outline {
+            -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.22);
+            color: transparent;
+            animation: heroNameReveal 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both;
+        }
+
+        .hero-sub {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            line-height: 1.75;
+            max-width: 480px;
+            margin-bottom: 2.5rem;
+            animation: heroSlideUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.65s both;
+        }
+
+        .hero-sub em {
+            color: var(--text-body);
+            font-style: normal;
+            font-weight: 500;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            animation: heroSlideUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.82s both;
+        }
+
+        /* Buttons (Global) */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.85rem 2rem;
+            background: var(--purple);
+            color: var(--white);
+            font-family: var(--font-body);
+            font-size: 0.88rem;
+            font-weight: 500;
+            border-radius: var(--radius-pill);
+            border: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 0 28px rgba(155, 92, 255, 0.28);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary .ripple {
+            position: absolute;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(0);
+            animation: rippleAnim 0.5s ease-out forwards;
+            pointer-events: none;
+            /* Center ripple on spawn */
+            margin-top: -40px;
+            margin-left: -40px;
+        }
+
+        @keyframes rippleAnim {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 48px rgba(155, 92, 255, 0.48);
+        }
+
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.85rem 2rem;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            color: var(--white);
+            font-family: var(--font-body);
+            font-size: 0.88rem;
+            font-weight: 500;
+            border-radius: var(--radius-pill);
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .btn-ghost:hover {
+            border-color: rgba(255, 255, 255, 0.38);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Scroll Indicator */
+        .hero-scroll-indicator {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            animation: heroSlideUp 1s cubic-bezier(0.16, 1, 0.3, 1) 1.05s both;
+            z-index: 1;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 48px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.25), transparent);
+            animation: scrollPulse 2.2s infinite;
+        }
+
+        @keyframes scrollPulse {
+
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scaleY(1);
+                transform-origin: top;
+            }
+
+            50% {
+                opacity: 1;
+                transform: scaleY(1.15);
+                transform-origin: top;
+            }
+        }
+
+        /* Background Glow */
+        .hero-bg-glow {
+            position: absolute;
+            top: -10%;
+            right: -5%;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(155, 92, 255, 0.05) 0%, transparent 65%);
+            border-radius: 50%;
+            pointer-events: none;
+            will-change: transform;
+            z-index: 1;
+        }
+
+        /* ------------------------------------- */
+        /* ABOUT SECTION                         */
+        /* ------------------------------------- */
+        #about,
+        #projects,
+        #services {
+            padding: 9rem 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Top Border Glow for major sections */
+        #about::before,
+        #projects::before,
+        #services::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 10%;
+            width: 80%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(155, 92, 255, 0.12), transparent);
+            pointer-events: none;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: start;
+        }
+
+        .about-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 3.5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.12;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .about-text {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.85;
+            margin-bottom: 1rem;
+        }
+
+        .about-text strong {
+            color: var(--text-body);
+            font-weight: 500;
+        }
+
+        .about-stats {
+            display: flex;
+            gap: 2.5rem;
+            margin-top: 2.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .stat-num {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .skill-card {
+            padding: 1.6rem;
+            background: var(--surface-card);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-card);
+            transition: border-color var(--transition), background var(--transition), transform var(--transition);
+            cursor: default;
+        }
+
+        .skill-card:hover {
+            border-color: var(--purple-border);
+            background: var(--purple-dim);
+            transform: translateY(-3px);
+        }
+
+        .skill-icon {
+            font-size: 1.6rem;
+            margin-bottom: 0.9rem;
+            display: block;
+        }
+
+        .skill-card h4 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 0.45rem;
+            color: var(--white);
+        }
+
+        .skill-card p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Section Divider */
+        .section-divider {
+            width: calc(100% - 8rem);
+            margin: 0 auto;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.07), transparent);
+        }
+
+        /* ------------------------------------- */
+        /* PROJECTS SECTION                      */
+        /* ------------------------------------- */
+        #projects {
+            padding: 9rem 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .projects-header {
+            margin-bottom: 4rem;
+        }
+
+        .projects-title {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            text-transform: uppercase;
+            line-height: 0.92;
+            margin: 0.75rem 0 1rem;
+        }
+
+        .projects-sub {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            letter-spacing: 0.06em;
+        }
+
+        /* Grid Layout */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: auto auto;
+            gap: 20px;
+            width: 100%;
+        }
+
+        /* Card Styles */
+        .project-card {
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            will-change: transform;
+        }
+
+        /* Hover Glow Overlay */
+        .project-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                    rgba(155, 92, 255, 0.08),
+                    transparent 70%);
+            border-radius: inherit;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 0;
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--purple-border);
+            box-shadow: 0 24px 64px rgba(155, 92, 255, 0.14);
+        }
+
+        .card-thumb {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            display: block;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .project-card:hover .card-img {
+            transform: scale(1.04);
+        }
+
+        .card-img-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom,
+                    rgba(8, 8, 8, 0) 0%,
+                    rgba(8, 8, 8, 0) 50%,
+                    rgba(8, 8, 8, 0.65) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+
+        .card-badge {
+            position: absolute;
+            top: 0.85rem;
+            left: 0.85rem;
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.7);
+            background: rgba(0, 0, 0, 0.45);
+            padding: 0.25rem 0.65rem;
+            border-radius: var(--radius-pill);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 2;
+        }
+
+        .card-live {
+            position: absolute;
+            top: 0.85rem;
+            right: 0.85rem;
+            font-size: 0.65rem;
+            letter-spacing: 0.08em;
+            color: var(--purple-glow);
+            background: rgba(155, 92, 255, 0.12);
+            padding: 0.25rem 0.65rem;
+            border-radius: var(--radius-pill);
+            border: 1px solid var(--purple-border);
+            z-index: 2;
+            transition: background 0.2s;
+        }
+
+        .project-card:hover .card-live {
+            background: rgba(155, 92, 255, 0.25);
+        }
+
+        .card-info {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-type {
+            font-size: 0.68rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--purple);
+            margin-bottom: 0.45rem;
+        }
+
+        .card-title {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--white);
+            transition: color 0.2s;
+        }
+
+        .project-card:hover .card-title {
+            color: var(--purple-glow);
+        }
+
+        .card-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.65;
+            margin-bottom: 1rem;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .tag {
+            font-size: 0.65rem;
+            padding: 0.2rem 0.6rem;
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: var(--radius-pill);
+            color: var(--text-muted);
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .project-card:hover .tag {
+            border-color: var(--purple-border);
+            color: var(--purple-glow);
+        }
+
+        /* ------------------------------------- */
+        /* SERVICES SECTION                      */
+        /* ------------------------------------- */
+        #services {
+            padding: 9rem 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .services-header {
+            margin-bottom: 3.5rem;
+        }
+
+        .services-title {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            text-transform: uppercase;
+            line-height: 0.92;
+            margin: 0.75rem 0 1rem;
+        }
+
+        .services-sub {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            letter-spacing: 0.04em;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+        }
+
+        .service-card {
+            padding: 2rem;
+            background: var(--surface-card);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-card);
+            transition: border-color var(--transition), background var(--transition), transform var(--transition);
+            will-change: transform;
+        }
+
+        .service-card:hover {
+            border-color: var(--purple-border);
+            background: rgba(155, 92, 255, 0.05);
+            transform: translateY(-3px);
+        }
+
+        .service-num {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--purple-border);
+            line-height: 1;
+            margin-bottom: 1.25rem;
+        }
+
+        .service-card h3 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            color: var(--white);
+            line-height: 1.3;
+        }
+
+        .service-card p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* HIGHLIGHT CARD */
+        .service-card--highlight {
+            background: var(--purple-dim);
+            border-color: var(--purple-border);
+        }
+
+        .service-card--highlight:hover {
+            background: rgba(155, 92, 255, 0.18);
+            border-color: var(--purple);
+            box-shadow: 0 0 40px rgba(155, 92, 255, 0.12);
+        }
+
+        .service-card--highlight .service-num {
+            color: var(--purple-glow);
+        }
+
+        .service-card--highlight h3 {
+            color: var(--white);
+            font-size: 1.15rem;
+        }
+
+        .service-cta-btn {
+            display: inline-flex;
+            margin-top: 1.5rem;
+            padding: 0.7rem 1.6rem;
+            font-size: 0.82rem;
+        }
+
+        /* ------------------------------------- */
+        /* CTA SECTION                           */
+        /* ------------------------------------- */
+        #cta {
+            padding: 10rem 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(155, 92, 255, 0.07) 0%, transparent 65%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .cta-inner {
+            position: relative;
+            z-index: 1;
+            transform: translateY(60px);
+        }
+
+        .cta-title {
+            font-family: var(--font-display);
+            font-size: clamp(3.5rem, 9vw, 8rem);
+            font-weight: 800;
+            line-height: 0.92;
+            letter-spacing: -0.03em;
+            text-transform: uppercase;
+            margin: 1rem 0 1.5rem;
+        }
+
+        .cta-title em {
+            font-style: normal;
+            color: transparent;
+            -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.25);
+        }
+
+        .cta-sub {
+            font-size: 1rem;
+            color: var(--text-muted);
+            line-height: 1.75;
+            max-width: 380px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .cta-actions {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.25rem;
+        }
+
+        .btn-large {
+            padding: 1rem 2.4rem;
+            font-size: 0.95rem;
+        }
+
+        .cta-email-hint {
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.2);
+            letter-spacing: 0.06em;
+        }
+
+        /* ------------------------------------- */
+        /* FOOTER                                */
+        /* ------------------------------------- */
+        #footer {
+            padding: 2.5rem 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .footer-logo {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--white);
+        }
+
+        .footer-tagline {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 0.04em;
+        }
+
+        .footer-center {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-center a {
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.2);
+            transition: color 0.2s;
+        }
+
+        .footer-center a:hover {
+            color: var(--text-muted);
+        }
+
+        .footer-copy {
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* ------------------------------------- */
+        /* MOBILE / RESPONSIVE                   */
+        /* ------------------------------------- */
+        @media (max-width: 768px) {
+
+            /* Fix Cursor for Touch */
+            body,
+            .hovering {
+                cursor: auto !important;
+            }
+
+            #cursor,
+            #cursor-ring {
+                display: none !important;
+            }
+
+            #navbar {
+                padding: 1.2rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .nav-cta {
+                padding: 0.45rem 1rem;
+                font-size: 0.72rem;
+            }
+
+            #hero {
+                padding: 7rem 1.5rem 5rem;
+            }
+
+            .hero-name {
+                font-size: clamp(3.8rem, 16vw, 6rem);
+            }
+
+            .hero-sub {
+                font-size: 0.95rem;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.75rem;
+            }
+
+            .btn-primary,
+            .btn-ghost {
+                width: auto;
+            }
+
+            #about,
+            #projects,
+            #services,
+            #cta {
+                padding: 6rem 1.5rem;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .about-stats {
+                gap: 1.5rem;
+                flex-wrap: wrap;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-title {
+                font-size: clamp(3rem, 12vw, 5rem);
+            }
+
+            .cta-sub {
+                font-size: 0.9rem;
+            }
+
+            #footer {
+                flex-direction: column;
+                gap: 1.25rem;
+                text-align: center;
+                padding: 2rem 1.5rem;
+            }
+
+            .footer-center {
+                display: none;
+            }
+        }
+
+        /* --- Ambient Atmosphere & Floating Geometry Layers --- */
+        .ambient-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            transition: background 1.8s ease;
+        }
+
+        #ambientLines {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 1;
+        }
+
+        /* --- Section Border Glow Pulse --- */
+        @keyframes borderPulse {
+
+            0%,
+            100% {
+                opacity: 0.3;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        #about,
+        #projects,
+        #services,
+        #cta {
+            border-top: 1px solid rgba(155, 92, 255, 0.15);
+            position: relative;
+        }
+
+        #about::before,
+        #projects::before,
+        #services::before,
+        #cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(155, 92, 255, 0.4), transparent);
+            animation: borderPulse 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Ambient Layer and Canvas for light geometric lines -->
+    <div class="ambient-layer" id="ambientLayer"></div>
+    <canvas id="particles"></canvas>
+    <canvas id="ambientLines"></canvas>
+
+    <!-- Custom Cursor DOM -->
+    <div id="cursor" class="cursor"></div>
+    <div id="cursor-ring" class="cursor-ring"></div>
+
+    <!-- Main Content wrapper -->
+    <main id="app">
+        <div class="cinema-line"></div>
+        <!-- Cinematic Intro Screen -->
+        <div id="intro">
+            <div class="intro-bg-gradient"></div>
+            <p class="intro-headline">Click to enter</p>
+            <div class="intro-btn">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                </svg>
+            </div>
+        </div>
+
+        <div id="main-content">
+            <nav id="navbar">
+                <a href="#" class="nav-logo">LW</a>
+                <div class="nav-links">
+                    <a href="#about">About</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#services">Services</a>
+                </div>
+                <a href="mailto:luanwiebu@gmail.com" class="nav-cta">Let's talk</a>
+            </nav>
+
+            <section id="hero">
+                <div class="hero-video-wrap">
+                    <video class="hero-video" src="Start_and_end_202602221517_n3zwz.webm" autoplay muted loop
+                        playsinline preload="auto">
+                    </video>
+                    <div class="hero-video-overlay"></div>
+                </div>
+                <div class="hero-bg-glow"></div>
+                <div class="hero-inner">
+                    <div class="hero-tag">Web Designer & No-Code Developer · Since 2024</div>
+                    <h1 class="hero-name">
+                        <span class="name-line">LUAN</span>
+                        <span class="name-line outline">WIEBUSCH</span>
+                    </h1>
+                    <p class="hero-sub">
+                        I build websites and landing pages that <em>actually convert</em>.<br>
+                        From design to deployment — fast, clean, and built to perform.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#projects" class="btn-primary">See my work <svg width="14" height="14"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="7" y1="17" x2="17" y2="7" />
+                                <polyline points="7 7 17 7 17 17" />
+                            </svg></a>
+                        <a href="#about" class="btn-ghost">About me</a>
+                    </div>
+                </div>
+                <!-- FUTURE: atmospheric hero background video
+                     will be placed here as a muted autoplay loop
+                     with overlay: rgba(8,8,8,0.75) -->
+
+                <div class="hero-scroll-indicator">
+                    <div class="scroll-line"></div>
+                    <span>Scroll</span>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <section id="about">
+                <div class="about-grid">
+                    <div class="about-left reveal-left">
+                        <div class="section-label">About</div>
+                        <h2 class="about-title">Designer, developer<br>& digital builder.</h2>
+                        <p class="about-text">
+                            I'm Luan Wiebusch, from Brazil — a web designer and no-code developer
+                            building digital products since 2024. I create everything from
+                            high-converting landing pages to fully functional SaaS platforms with
+                            databases, authentication, and integrated checkout.
+                        </p>
+                        <p class="about-text">
+                            I work with cutting-edge no-code tools and AI to deliver
+                            <strong>agency-quality results</strong> at freelancer speed.
+                            Every project is built with conversion, performance, and
+                            visual identity in mind.
+                        </p>
+                        <div class="about-stats">
+                            <div class="stat-item">
+                                <span class="stat-num">6+</span>
+                                <span class="stat-label">Projects delivered</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-num">2</span>
+                                <span class="stat-label">SaaS products built</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-num">100%</span>
+                                <span class="stat-label">No-code powered</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="about-right reveal delay-2">
+                        <div class="section-label">What I do</div>
+                        <div class="skills-grid">
+                            <div class="skill-card reveal-scale delay-1">
+                                <div class="skill-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                                    </svg></div>
+                                <h4>Landing Pages</h4>
+                                <p>High-converting pages focused on CTA, user journey and visual hierarchy</p>
+                            </div>
+                            <div class="skill-card reveal-scale delay-2">
+                                <div class="skill-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path
+                                            d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+                                    </svg></div>
+                                <h4>SaaS & Systems</h4>
+                                <p>Full apps with database, authentication and integrated checkout</p>
+                            </div>
+                            <div class="skill-card reveal-scale delay-3">
+                                <div class="skill-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />
+                                        <circle cx="17.5" cy="10.5" r=".5" fill="currentColor" />
+                                        <circle cx="8.5" cy="7.5" r=".5" fill="currentColor" />
+                                        <circle cx="6.5" cy="12.5" r=".5" fill="currentColor" />
+                                        <path
+                                            d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
+                                    </svg></div>
+                                <h4>UI/UX Design</h4>
+                                <p>Modern, responsive interfaces with strong visual hierarchy</p>
+                            </div>
+                            <div class="skill-card reveal-scale delay-4">
+                                <div class="skill-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <rect x="3" y="11" width="18" height="10" rx="2" />
+                                        <circle cx="12" cy="5" r="2" />
+                                        <path d="M12 7v4" />
+                                        <line x1="8" y1="16" x2="8" y2="16" />
+                                        <line x1="16" y1="16" x2="16" y2="16" />
+                                    </svg></div>
+                                <h4>AI Integration</h4>
+                                <p>Smart AI-powered features embedded directly into products</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <section id="projects">
+                <div class="projects-header reveal">
+                    <div class="section-label">Portfolio</div>
+                    <h2 class="projects-title">Selected<br>Work</h2>
+                    <p class="projects-sub">Click any project to visit it live</p>
+                </div>
+
+                <div class="projects-grid">
+                    <!-- CARD 1 — FEATURED (Fintalk) -->
+                    <a href="https://fintalk-finance.lovable.app/" target="_blank"
+                        class="project-card featured reveal-scale">
+                        <div class="card-thumb">
+                            <img class="card-img" src="thumb-fintalk.jpg" alt="Fintalk" loading="lazy">
+                            <div class="card-img-overlay"></div>
+                            <div class="card-badge">SaaS · FinTech</div>
+                            <div class="card-live"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <line x1="7" y1="17" x2="17" y2="7" />
+                                    <polyline points="7 7 17 7 17 17" />
+                                </svg> Live</div>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-type">Fully Functional · Database + Auth + Checkout</div>
+                            <h3 class="card-title">Fintalk — AI Financial Planner</h3>
+                            <p class="card-desc">Full SaaS with login, database and checkout. Luna, the AI financial
+                                assistant, organizes your finances just from natural text messages.</p>
+                            <div class="card-tags">
+                                <span class="tag">SaaS</span>
+                                <span class="tag">AI</span>
+                                <span class="tag">FinTech</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- CARD 2 (Notion) -->
+                    <a href="https://notion-ai-landing-page.vercel.app/" target="_blank"
+                        class="project-card reveal delay-1">
+                        <div class="card-thumb">
+                            <img class="card-img" src="thumb-notion.jpg" alt="Notion AI" loading="lazy">
+                            <div class="card-img-overlay"></div>
+                            <div class="card-badge">Landing Page</div>
+                            <div class="card-live"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <line x1="7" y1="17" x2="17" y2="7" />
+                                    <polyline points="7 7 17 7 17 17" />
+                                </svg> Live</div>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-type">Fictional Client · UI/UX Challenge</div>
+                            <h3 class="card-title">Notion AI — Feature Landing Page</h3>
+                            <p class="card-desc">"What if Notion hired me to build their AI feature landing page?" A
+                                professional recreation of Notion's visual identity for an AI feature — dark mode,
+                                smooth animations, and clean hierarchy.</p>
+                            <div class="card-tags">
+                                <span class="tag">Landing Page</span>
+                                <span class="tag">Dark Mode</span>
+                                <span class="tag">Animations</span>
+                                <span class="tag">UI/UX</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- CARD 3 (GymShark) -->
+                    <a href="https://gymshark-campaign-landing-page.vercel.app/" target="_blank"
+                        class="project-card reveal-scale delay-2">
+                        <div class="card-thumb">
+                            <img class="card-img" src="thumb-gymshark.jpg" alt="GymShark" loading="lazy">
+                            <div class="card-img-overlay"></div>
+                            <div class="card-badge">Marketplace</div>
+                            <div class="card-live"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <line x1="7" y1="17" x2="17" y2="7" />
+                                    <polyline points="7 7 17 7 17 17" />
+                                </svg> Live</div>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-type">Fictional Client · E-commerce Challenge</div>
+                            <h3 class="card-title">GymShark — Campaign Page</h3>
+                            <p class="card-desc">Campaign marketplace page focused on offer and conversion. Demonstrates
+                                mastery of visual composition and image-driven layouts.</p>
+                            <div class="card-tags">
+                                <span class="tag">Marketplace</span>
+                                <span class="tag">E-commerce</span>
+                                <span class="tag">Campaign</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- CARD 4 (FinCare) -->
+                    <a href="https://fincare.fun/" target="_blank" class="project-card reveal">
+                        <div class="card-thumb">
+                            <img class="card-img" src="thumb-fincare.jpg" alt="FinCare" loading="lazy">
+                            <div class="card-img-overlay"></div>
+                            <div class="card-badge">SaaS · Management</div>
+                            <div class="card-live"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <line x1="7" y1="17" x2="17" y2="7" />
+                                    <polyline points="7 7 17 7 17 17" />
+                                </svg> Live</div>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-type">Fully Functional · Database + Auth</div>
+                            <h3 class="card-title">FinCare — Aesthetic Clinic Software</h3>
+                            <p class="card-desc">Complete management SaaS with CRM, inventory, financial control and
+                                more. Full authentication and real-time database included.</p>
+                            <div class="card-tags">
+                                <span class="tag">SaaS</span>
+                                <span class="tag">CRM</span>
+                                <span class="tag">Management</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- CARD 5 (Mapa) -->
+                    <a href="https://www.mapadosricos.shop/" target="_blank" class="project-card reveal delay-1">
+                        <div class="card-thumb">
+                            <img class="card-img" src="thumb-mapa.jpg" alt="Mapa dos Ricos" loading="lazy">
+                            <div class="card-img-overlay"></div>
+                            <div class="card-badge">Info Product</div>
+                            <div class="card-live"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <line x1="7" y1="17" x2="17" y2="7" />
+                                    <polyline points="7 7 17 7 17 17" />
+                                </svg> Live</div>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-type">Hotmart Checkout · Conversion Focused</div>
+                            <h3 class="card-title">Mapa dos Ricos — Sales Page</h3>
+                            <p class="card-desc">High-conversion landing page for a financial info product with Hotmart
+                                checkout integration. Built around psychological triggers and social proof.</p>
+                            <div class="card-tags">
+                                <span class="tag">Sales Page</span>
+                                <span class="tag">Hotmart</span>
+                                <span class="tag">Conversion</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- CARD 6 (Ideias) -->
+                    <a href="https://ideiasdemicrosaas.lovable.app/" target="_blank"
+                        class="project-card reveal delay-2">
+                        <div class="card-thumb">
+                            <img class="card-img" src="thumb-ideias.jpg" alt="1000 Micro SaaS Ideas" loading="lazy">
+                            <div class="card-img-overlay"></div>
+                            <div class="card-badge">Info Product</div>
+                            <div class="card-live"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <line x1="7" y1="17" x2="17" y2="7" />
+                                    <polyline points="7 7 17 7 17 17" />
+                                </svg> Live</div>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-type">Hotmart Checkout · AI-Powered Quiz</div>
+                            <h3 class="card-title">1000 Micro SaaS Ideas — Sales Page</h3>
+                            <p class="card-desc">Sales page for a curated database of 1,000 SaaS ideas with an AI quiz
+                                that matches the right idea to the buyer's profile. Hotmart checkout integrated.</p>
+                            <div class="card-tags">
+                                <span class="tag">Sales Page</span>
+                                <span class="tag">AI Quiz</span>
+                                <span class="tag">SaaS Ideas</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- SERVICES -->
+            <section id="services">
+
+                <div class="services-header reveal-left">
+                    <div class="section-label">What I offer</div>
+                    <h2 class="services-title">Services</h2>
+                    <p class="services-sub">Transparent deliverables. Custom pricing for every project.</p>
+                </div>
+
+                <div class="services-grid">
+
+                    <div class="service-card reveal-scale delay-1">
+                        <div class="service-num">01</div>
+                        <h3>Landing Pages</h3>
+                        <p>Conversion-focused pages designed to turn visitors into leads or customers. Includes CTA
+                            strategy, copywriting structure and visual hierarchy.</p>
+                    </div>
+
+                    <div class="service-card reveal-scale delay-2">
+                        <div class="service-num">02</div>
+                        <h3>Hosting & Domain</h3>
+                        <p>Full setup of hosting and custom domain. Your site live, fast and reliable — no technical
+                            headaches on your end.</p>
+                    </div>
+
+                    <div class="service-card reveal-scale delay-3">
+                        <div class="service-num">03</div>
+                        <h3>Site + Monthly Plan</h3>
+                        <p>Website creation bundled with ongoing monthly maintenance. Updates, fixes and improvements
+                            included — one recurring investment.</p>
+                    </div>
+
+                    <div class="service-card reveal-scale delay-1">
+                        <div class="service-num">04</div>
+                        <h3>Full-Stack Sites</h3>
+                        <p>Complete web apps with real database, user authentication and integrated checkout. SaaS
+                            platforms, client portals, internal systems.</p>
+                    </div>
+
+                    <div class="service-card reveal-scale delay-2">
+                        <div class="service-num">05</div>
+                        <h3>Marketplaces & Systems</h3>
+                        <p>E-commerce pages, product showcases, presentation websites and campaign pages. Complex visual
+                            layouts handled with precision.</p>
+                    </div>
+
+                    <div class="service-card service-card--highlight reveal-scale delay-4">
+                        <div class="service-num"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon
+                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                            </svg></div>
+                        <h3>Any website.<br>Just ask.</h3>
+                        <p>Landing pages, SaaS, marketplaces, portfolios, presentation sites — if it lives on the web, I
+                            build it. Let's talk about your project.</p>
+                        <a href="mailto:luanwiebu@gmail.com" class="btn-primary service-cta-btn">Get in touch <svg
+                                width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="7" y1="17" x2="17" y2="7" />
+                                <polyline points="7 7 17 7 17 17" />
+                            </svg></a>
+                    </div>
+
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- CTA -->
+            <section id="cta">
+                <!-- FUTURE: subtle animated texture or grain
+                     overlay will be placed here -->
+                <div class="cta-glow"></div>
+                <div class="cta-inner reveal">
+                    <div class="section-label" style="justify-content: center; width: 100%;">
+                        <span style="display:flex; justify-content:center; width:100%; position:relative;">
+                            <span
+                                style="position:absolute; right:100%; margin-right: 0.75rem; top:50%; width:48px; height:1px; background:var(--purple-border);"></span>
+                            Let's work together
+                            <span
+                                style="position:absolute; left:100%; margin-left: 0.75rem; top:50%; width:48px; height:1px; background:var(--purple-border);"></span>
+                        </span>
+                    </div>
+                    <h2 class="cta-title">
+                        Got a project<br>
+                        <em>in mind?</em>
+                    </h2>
+                    <p class="cta-sub">
+                        I'm available for freelance projects worldwide.<br>
+                        Send me a message and let's build something great.
+                    </p>
+                    <div class="cta-actions">
+                        <a href="mailto:luanwiebu@gmail.com" class="btn-primary btn-large">
+                            Send me an email <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="7" y1="17" x2="17" y2="7" />
+                                <polyline points="7 7 17 7 17 17" />
+                            </svg>
+                        </a>
+                    </div>
+                    <p class="cta-email-hint">luanwiebu@gmail.com</p>
+                </div>
+            </section>
+
+            <!-- FOOTER -->
+            <footer id="footer">
+                <div class="footer-left">
+                    <span class="footer-logo">LW</span>
+                    <span class="footer-tagline">Web Designer & No-Code Developer</span>
+                </div>
+                <div class="footer-center">
+                    <a href="#about">About</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#services">Services</a>
+                </div>
+                <div class="footer-right">
+                    <span class="footer-copy">© 2026 Luan Wiebusch</span>
+                </div>
+            </footer>
+
+        </div>
+    </main>
+
+    <script>
+        // --- 1. Custom Cursor Functionality ---
+        const cursor = document.getElementById('cursor');
+        const cursorRing = document.getElementById('cursor-ring');
+        const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+
+        // Start from center of screen to prevent jumping
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let ringX = mouseX;
+        let ringY = mouseY;
+        let isMoving = false;
+
+        // Apply logic only if device supports fine pointers (desktop/mouse)
+        if (!isTouchDevice) {
+            window.addEventListener('mousemove', (e) => {
+                if (!isMoving) {
+                    // Snap the ring instantly on the very first move
+                    ringX = e.clientX;
+                    ringY = e.clientY;
+                    isMoving = true;
+                }
+
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+
+                // Cursor dot follows instantly
+                cursor.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%))`;
+            });
+
+            // Lerp interpolation logic
+            const lerp = (start, end, amt) => (1 - amt) * start + amt * end;
+
+            // Render loop for cursor ring
+            const renderCursor = () => {
+                ringX = lerp(ringX, mouseX, 0.12);
+                ringY = lerp(ringY, mouseY, 0.12);
+
+                cursorRing.style.transform = `translate(calc(${ringX}px - 50%), calc(${ringY}px - 50%))`;
+                requestAnimationFrame(renderCursor);
+            };
+            requestAnimationFrame(renderCursor);
+
+            // Setup hover state for interactive elements
+            const initHover = () => {
+                const interactables = document.querySelectorAll('a, button, input, textarea, select, .interactive');
+                interactables.forEach(el => {
+                    // Prevent duplicate listeners
+                    if (el.dataset.hoverAttached) return;
+                    el.dataset.hoverAttached = true;
+
+                    // Apply hovering class to body when over interactive elements
+                    el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+                    el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+                });
+            };
+
+            // Run initially and observe DOM for new interactive elements
+            initHover();
+            const observer = new MutationObserver(initHover);
+            observer.observe(document.body, { childList: true, subtree: true });
+        }
+
+
+        // --- 2. Animated Particle Canvas ---
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+        const particleCount = 80;
+
+        // Handle canvas sizing
+        const resizeCanvas = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            // Best practice: re-initialize if you want particles evenly distributed on window resize, 
+            // but for subtle ambient particles leaving them is fine.
+        };
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                // Move very slowly by generating random velocity between -0.2 and 0.2
+                this.vx = (Math.random() - 0.5) * 0.4;
+                this.vy = (Math.random() - 0.5) * 0.4;
+                // Radius between 1 and 1.5px
+                this.radius = Math.random() * 0.5 + 1;
+
+                // Color ratio: 30% purple, 70% white
+                if (Math.random() < 0.3) {
+                    // Purple base #9b5cff -> rgb(155, 92, 255). Opacity: 0.12 - 0.2
+                    const alpha = Math.random() * 0.08 + 0.12;
+                    this.color = `rgba(155, 92, 255, ${alpha.toFixed(2)})`;
+                } else {
+                    // White base. Opacity: 0.08 - 0.18
+                    const alpha = Math.random() * 0.1 + 0.08;
+                    this.color = `rgba(255, 255, 255, ${alpha.toFixed(2)})`;
+                }
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Bounce on viewport edges
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                ctx.fill();
+            }
+        }
+
+        // --- 1.5 Ambient Layers & Drifting Geometry ---
+        // A) Ambient Section Gradients
+        const sectionNodes = document.querySelectorAll('#hero, #about, #projects, #services, #cta');
+        const ambients = {
+            'hero': 'radial-gradient(ellipse 80% 60% at 70% 40%, rgba(155,92,255,0.06) 0%, transparent 70%)',
+            'about': 'radial-gradient(ellipse 70% 50% at 20% 50%, rgba(80,120,255,0.05) 0%, transparent 70%)',
+            'projects': 'radial-gradient(ellipse 90% 60% at 50% 30%, rgba(100,60,200,0.07) 0%, transparent 65%)',
+            'services': 'radial-gradient(ellipse 70% 60% at 80% 60%, rgba(160,100,255,0.05) 0%, transparent 70%)',
+            'cta': 'radial-gradient(ellipse 100% 70% at 50% 50%, rgba(155,92,255,0.09) 0%, transparent 60%)'
+        };
+        const ambientLayer = document.getElementById('ambientLayer');
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    ambientLayer.style.background = ambients[entry.target.id];
+                }
+            });
+        }, { threshold: 0.3 });
+        sectionNodes.forEach(s => sectionObserver.observe(s));
+
+        // B) Ambient Light Lines Canvas
+        const linesCanvas = document.getElementById('ambientLines');
+        const lctx = linesCanvas.getContext('2d');
+
+        linesCanvas.width = window.innerWidth;
+        linesCanvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            linesCanvas.width = window.innerWidth;
+            linesCanvas.height = window.innerHeight;
+        });
+
+        // 5 long slow-moving line segments
+        const ambientLinesList = Array.from({ length: 5 }, (_, i) => ({
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight,
+            angle: (Math.PI / 4) + (Math.random() * 0.5 - 0.25),
+            length: 200 + Math.random() * 400,
+            speed: 0.08 + Math.random() * 0.12,
+            opacity: 0.02 + Math.random() * 0.03,
+            width: 0.5 + Math.random() * 0.5
+        }));
+
+        function drawAmbientLines() {
+            lctx.clearRect(0, 0, linesCanvas.width, linesCanvas.height);
+
+            ambientLinesList.forEach(line => {
+                line.x += Math.cos(line.angle) * line.speed;
+                line.y += Math.sin(line.angle) * line.speed;
+
+                // Reset cycle
+                if (line.x > linesCanvas.width + 500 ||
+                    line.y > linesCanvas.height + 500 ||
+                    line.x < -500 || line.y < -500) {
+                    line.x = Math.random() * linesCanvas.width;
+                    line.y = -100;
+                    line.angle = (Math.PI / 4) + (Math.random() * 0.5 - 0.25);
+                }
+
+                const x2 = line.x + Math.cos(line.angle) * line.length;
+                const y2 = line.y + Math.sin(line.angle) * line.length;
+
+                const gradient = lctx.createLinearGradient(line.x, line.y, x2, y2);
+                gradient.addColorStop(0, `rgba(155,92,255,0)`);
+                gradient.addColorStop(0.3, `rgba(155,92,255,${line.opacity})`);
+                gradient.addColorStop(0.7, `rgba(155,92,255,${line.opacity})`);
+                gradient.addColorStop(1, `rgba(155,92,255,0)`);
+
+                lctx.beginPath();
+                lctx.moveTo(line.x, line.y);
+                lctx.lineTo(x2, y2);
+                lctx.strokeStyle = gradient;
+                lctx.lineWidth = line.width;
+                lctx.stroke();
+            });
+
+            requestAnimationFrame(drawAmbientLines);
+        }
+        drawAmbientLines();
+
+        // Setup base particles array
+        const initParticles = () => {
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        };
+
+        // Render loop for particle logic
+        const animateParticles = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        };
+
+        initParticles();
+        animateParticles();
+
+
+        // --- 3. Scroll Reveal Utility ---
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.08,
+            rootMargin: '0px 0px -40px 0px'
+        });
+
+        const observeReveals = () => {
+            document.querySelectorAll('.reveal:not(.visible), .reveal-left:not(.visible), .reveal-scale:not(.visible)').forEach(el => {
+                revealObserver.observe(el);
+            });
+        };
+
+        // Observe elements present on load
+        observeReveals();
+
+        // Safety trigger for temporary foundation message so it animates reliably
+        setTimeout(() => {
+            const h1 = document.querySelector('.temp-message');
+            if (h1 && !h1.classList.contains('visible')) {
+                h1.classList.add('visible');
+            }
+        }, 100);
+
+        // --- 4. Cinematic Intro Logic ---
+        const intro = document.getElementById('intro');
+        const mainContent = document.getElementById('main-content');
+        const cinemaLine = document.querySelector('.cinema-line');
+
+        if (intro) {
+            intro.addEventListener('click', () => {
+                intro.style.pointerEvents = 'none';
+                intro.classList.add('exiting');
+                if (cinemaLine) cinemaLine.classList.add('active');
+
+                setTimeout(() => {
+                    intro.style.display = 'none';
+                }, 700);
+
+                setTimeout(() => {
+                    mainContent.classList.add('visible');
+                }, 750);
+            });
+        }
+
+        // --- 5. Navbar Scroll Logic & Active Section ---
+        const navbar = document.getElementById('navbar');
+        const sections = document.querySelectorAll('#about, #projects, #services');
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        // Throttle scroll variables
+        let isScrolling = false;
+
+        // Hero Parallax setup
+        const heroGlow = document.querySelector('.hero-bg-glow');
+
+        window.addEventListener('scroll', () => {
+            if (!isScrolling) {
+                window.requestAnimationFrame(() => {
+                    // Navbar Docking
+                    if (window.scrollY > 60) {
+                        navbar.classList.add('scrolled');
+                    } else {
+                        navbar.classList.remove('scrolled');
+                    }
+
+                    // Active Section Tracking
+                    let currentSection = '';
+                    sections.forEach(section => {
+                        const sectionTop = section.offsetTop;
+                        if (window.scrollY >= sectionTop - 200) {
+                            currentSection = section.getAttribute('id');
+                        }
+                    });
+
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${currentSection}`) {
+                            link.classList.add('active');
+                        }
+                    });
+
+                    // Hero Parallax Logic
+                    if (heroGlow && window.scrollY < window.innerHeight * 1.5) {
+                        heroGlow.style.transform = `translateY(${window.scrollY * 0.25}px)`;
+                    }
+
+                    isScrolling = false;
+                });
+                isScrolling = true;
+            }
+        });
+
+        // --- 6. Project Card Hover Spotlight ---
+        const projectCards = document.querySelectorAll('.project-card');
+        projectCards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        // --- 7. Button Ripple Effect ---
+        const primaryBtns = document.querySelectorAll('.btn-primary');
+        primaryBtns.forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                // Determine click location, or default center if enter key
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX ? e.clientX - rect.left : rect.width / 2;
+                const y = e.clientY ? e.clientY - rect.top : rect.height / 2;
+
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple');
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+
+                this.appendChild(ripple);
+
+                setTimeout(() => {
+                    ripple.remove();
+                }, 500);
+            });
+        });
+
+    </script>
+</body>
+
+</html>
