@@ -1167,6 +1167,140 @@
         }
 
         /* ------------------------------------- */
+        /* PLANS SECTION                         */
+        /* ------------------------------------- */
+        #planos {
+            padding: 9rem 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .plans-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .plans-title {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 6vw, 4.5rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            text-transform: uppercase;
+            line-height: 0.92;
+            color: var(--white);
+        }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .plan-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-card);
+            padding: 2.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .plan-card:hover {
+            border-color: var(--purple-border);
+            background: rgba(155, 92, 255, 0.05);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(155, 92, 255, 0.1);
+        }
+
+        .plan-highlight {
+            border-color: var(--purple-border);
+            background: linear-gradient(180deg, rgba(155, 92, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+        }
+
+        .plan-highlight:hover {
+            border-color: var(--purple);
+            box-shadow: 0 0 40px rgba(155, 92, 255, 0.2);
+        }
+
+        .plan-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--purple);
+            color: var(--white);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 0.3rem 1rem;
+            border-radius: var(--radius-pill);
+            box-shadow: 0 0 15px rgba(155, 92, 255, 0.4);
+            white-space: nowrap;
+        }
+
+        .plan-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-sub {
+            font-size: 0.85rem;
+            color: var(--purple-glow);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .plan-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+
+        .plan-btn {
+            width: 100%;
+            text-align: center;
+            justify-content: center;
+            padding: 1rem;
+            font-size: 0.9rem;
+            border-radius: var(--radius-button);
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .plan-btn-outline {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--white);
+        }
+
+        .plan-card:hover .plan-btn-outline {
+            border-color: var(--purple-border);
+            color: var(--purple-glow);
+        }
+
+        .plan-btn-primary {
+            background: var(--purple);
+            color: var(--white);
+            border: 1px solid var(--purple);
+        }
+
+        .plan-btn-primary:hover {
+            background: var(--purple-glow);
+            box-shadow: 0 0 20px rgba(155, 92, 255, 0.4);
+        }
+
+        /* ------------------------------------- */
         /* CTA SECTION                           */
         /* ------------------------------------- */
         #cta {
@@ -1346,6 +1480,7 @@
             #about,
             #projects,
             #services,
+            #planos,
             #cta {
                 padding: 6rem 1.5rem;
             }
@@ -1425,6 +1560,7 @@
         #about,
         #projects,
         #services,
+        #planos,
         #cta {
             border-top: 1px solid rgba(155, 92, 255, 0.15);
             position: relative;
@@ -1433,6 +1569,7 @@
         #about::before,
         #projects::before,
         #services::before,
+        #planos::before,
         #cta::before {
             content: '';
             position: absolute;
@@ -1853,6 +1990,82 @@
 
             <div class="section-divider"></div>
 
+            <!-- PLANOS E PACOTES -->
+            <section id="planos">
+                <div class="plans-header reveal-scale">
+                    <h2 class="plans-title">Escolha seu Plano</h2>
+                </div>
+
+                <div class="plans-grid">
+                    <!-- Card 1 -->
+                    <div class="plan-card reveal delay-1">
+                        <h3 class="plan-title">Pacote Essencial</h3>
+                        <div class="plan-sub">Apenas Entrega</div>
+                        <p class="plan-desc">
+                            Criação da sua Landing Page ou Site com design focado em conversão e experiência impecável no celular (Mobile UI/UX). Te entrego o código ou faço o deploy na sua infraestrutura.
+                        </p>
+                        <a href="https://wa.me/5551994416575" target="_blank" class="plan-btn plan-btn-outline interactive" style="display: flex; align-items: center; gap: 0.5rem;">
+                            Quero este plano
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="7" y1="17" x2="17" y2="7" />
+                                <polyline points="7 7 17 7 17 17" />
+                            </svg>
+                        </a>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="plan-card plan-highlight reveal-scale delay-2">
+                        <div class="plan-badge">Mais Escolhido</div>
+                        <h3 class="plan-title">Pacote Tranquilidade</h3>
+                        <div class="plan-sub">Site + Infraestrutura</div>
+                        <p class="plan-desc">
+                            O mais escolhido. Desenvolvo seu site com tecnologia PWA para carregamento rápido e cuido de toda a parte técnica: servidor, domínio e segurança SSL. Seu site sempre no ar, sem dor de cabeça.
+                        </p>
+                        <a href="https://wa.me/5551994416575" target="_blank" class="plan-btn plan-btn-primary interactive" style="display: flex; align-items: center; gap: 0.5rem;">
+                            Quero este plano
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="7" y1="17" x2="17" y2="7" />
+                                <polyline points="7 7 17 7 17 17" />
+                            </svg>
+                        </a>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="plan-card reveal delay-3">
+                        <h3 class="plan-title">Máquina de Vendas</h3>
+                        <div class="plan-sub">Site + Manutenção</div>
+                        <p class="plan-desc">
+                            Para evolução constante. Inclui o site, a infraestrutura completa e horas mensais dedicadas para atualizar textos, trocar banners e ajustar a rota para sua empresa vender mais.
+                        </p>
+                        <a href="https://wa.me/5551994416575" target="_blank" class="plan-btn plan-btn-outline interactive" style="display: flex; align-items: center; gap: 0.5rem;">
+                            Quero este plano
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="7" y1="17" x2="17" y2="7" />
+                                <polyline points="7 7 17 7 17 17" />
+                            </svg>
+                        </a>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="plan-card reveal delay-4">
+                        <h3 class="plan-title">Sistemas & SaaS</h3>
+                        <div class="plan-sub">Full-Stack</div>
+                        <p class="plan-desc">
+                            Precisa de login, área de membros ou painel de controle interno? Construo sistemas robustos com banco de dados escalável (Supabase), prontos para a sua operação rodar 100% online.
+                        </p>
+                        <a href="https://wa.me/5551994416575" target="_blank" class="plan-btn plan-btn-outline interactive" style="display: flex; align-items: center; gap: 0.5rem;">
+                            Quero este plano
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="7" y1="17" x2="17" y2="7" />
+                                <polyline points="7 7 17 7 17 17" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
             <!-- CTA -->
             <section id="cta">
                 <!-- FUTURE: subtle animated texture or grain
@@ -2032,12 +2245,13 @@
 
         // --- 1.5 Ambient Layers & Drifting Geometry ---
         // A) Ambient Section Gradients
-        const sectionNodes = document.querySelectorAll('#hero, #about, #projects, #services, #cta');
+        const sectionNodes = document.querySelectorAll('#hero, #about, #projects, #services, #planos, #cta');
         const ambients = {
             'hero': 'radial-gradient(ellipse 80% 60% at 70% 40%, rgba(155,92,255,0.06) 0%, transparent 70%)',
             'about': 'radial-gradient(ellipse 70% 50% at 20% 50%, rgba(80,120,255,0.05) 0%, transparent 70%)',
             'projects': 'radial-gradient(ellipse 90% 60% at 50% 30%, rgba(100,60,200,0.07) 0%, transparent 65%)',
             'services': 'radial-gradient(ellipse 70% 60% at 80% 60%, rgba(160,100,255,0.05) 0%, transparent 70%)',
+            'planos': 'radial-gradient(ellipse 60% 70% at 30% 60%, rgba(130,70,255,0.06) 0%, transparent 70%)',
             'cta': 'radial-gradient(ellipse 100% 70% at 50% 50%, rgba(155,92,255,0.09) 0%, transparent 60%)'
         };
         const ambientLayer = document.getElementById('ambientLayer');
