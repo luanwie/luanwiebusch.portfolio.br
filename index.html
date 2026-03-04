@@ -51,6 +51,7 @@
 
         html {
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
         body {
@@ -558,10 +559,10 @@
             letter-spacing: -0.03em;
             text-transform: uppercase;
             margin-bottom: 2.5rem;
+            max-width: 100%;
         }
 
         .name-line {
-            white-space: nowrap;
             width: 100%;
             display: block;
             font-size: clamp(2.8rem, 9.5vw, 11rem);
@@ -718,6 +719,7 @@
             top: -10%;
             right: -5%;
             width: 700px;
+            max-width: 100vw;
             height: 700px;
             background: radial-gradient(circle, rgba(155, 92, 255, 0.05) 0%, transparent 65%);
             border-radius: 50%;
@@ -881,6 +883,8 @@
             text-transform: uppercase;
             line-height: 0.92;
             margin: 0.75rem 0 1rem;
+            word-break: break-word;
+            overflow-wrap: break-word;
         }
 
         .projects-sub {
@@ -1085,6 +1089,8 @@
             text-transform: uppercase;
             line-height: 0.92;
             margin: 0.75rem 0 1rem;
+            word-break: break-word;
+            overflow-wrap: break-word;
         }
 
         .services-sub {
@@ -1336,6 +1342,8 @@
             letter-spacing: -0.03em;
             text-transform: uppercase;
             margin: 1rem 0 1.5rem;
+            word-break: break-word;
+            overflow-wrap: break-word;
         }
 
         .cta-title em {
@@ -1456,10 +1464,37 @@
 
             #hero {
                 padding: 7rem 1.5rem 5rem;
+                overflow: hidden;
             }
 
             .hero-name {
-                font-size: clamp(3.8rem, 16vw, 6rem);
+                font-size: clamp(2.8rem, 13vw, 5rem);
+            }
+
+            .name-line {
+                font-size: clamp(2.8rem, 13vw, 5rem);
+            }
+
+            .hero-bg-glow {
+                width: 300px;
+                height: 300px;
+                right: -10%;
+            }
+
+            .projects-title {
+                font-size: clamp(2rem, 10vw, 3.5rem);
+            }
+
+            .services-title {
+                font-size: clamp(2rem, 10vw, 3.5rem);
+            }
+
+            .cta-title {
+                font-size: clamp(2.5rem, 10vw, 4rem);
+            }
+
+            .plans-title {
+                font-size: clamp(2rem, 10vw, 3.5rem);
             }
 
             .hero-sub {
@@ -2002,11 +2037,15 @@
                         <h3 class="plan-title">Pacote Essencial</h3>
                         <div class="plan-sub">Apenas Entrega</div>
                         <p class="plan-desc">
-                            Criação da sua Landing Page ou Site com design focado em conversão e experiência impecável no celular (Mobile UI/UX). Te entrego o código ou faço o deploy na sua infraestrutura.
+                            Criação da sua Landing Page ou Site com design focado em conversão e experiência impecável
+                            no celular (Mobile UI/UX). Te entrego o código ou faço o deploy na sua infraestrutura.
                         </p>
-                        <a href="https://wa.me/5551994416575" target="_blank" class="plan-btn plan-btn-outline interactive" style="display: flex; align-items: center; gap: 0.5rem;">
+                        <a href="https://wa.me/5551994416575" target="_blank"
+                            class="plan-btn plan-btn-outline interactive"
+                            style="display: flex; align-items: center; gap: 0.5rem;">
                             Quero este plano
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="7" y1="17" x2="17" y2="7" />
                                 <polyline points="7 7 17 7 17 17" />
                             </svg>
@@ -2019,11 +2058,16 @@
                         <h3 class="plan-title">Pacote Tranquilidade</h3>
                         <div class="plan-sub">Site + Infraestrutura</div>
                         <p class="plan-desc">
-                            O mais escolhido. Desenvolvo seu site com tecnologia PWA para carregamento rápido e cuido de toda a parte técnica: servidor, domínio e segurança SSL. Seu site sempre no ar, sem dor de cabeça.
+                            O mais escolhido. Desenvolvo seu site com tecnologia PWA para carregamento rápido e cuido de
+                            toda a parte técnica: servidor, domínio e segurança SSL. Seu site sempre no ar, sem dor de
+                            cabeça.
                         </p>
-                        <a href="https://wa.me/5551994416575" target="_blank" class="plan-btn plan-btn-primary interactive" style="display: flex; align-items: center; gap: 0.5rem;">
+                        <a href="https://wa.me/5551994416575" target="_blank"
+                            class="plan-btn plan-btn-primary interactive"
+                            style="display: flex; align-items: center; gap: 0.5rem;">
                             Quero este plano
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="7" y1="17" x2="17" y2="7" />
                                 <polyline points="7 7 17 7 17 17" />
                             </svg>
@@ -2035,11 +2079,15 @@
                         <h3 class="plan-title">Máquina de Vendas</h3>
                         <div class="plan-sub">Site + Manutenção</div>
                         <p class="plan-desc">
-                            Para evolução constante. Inclui o site, a infraestrutura completa e horas mensais dedicadas para atualizar textos, trocar banners e ajustar a rota para sua empresa vender mais.
+                            Para evolução constante. Inclui o site, a infraestrutura completa e horas mensais dedicadas
+                            para atualizar textos, trocar banners e ajustar a rota para sua empresa vender mais.
                         </p>
-                        <a href="https://wa.me/5551994416575" target="_blank" class="plan-btn plan-btn-outline interactive" style="display: flex; align-items: center; gap: 0.5rem;">
+                        <a href="https://wa.me/5551994416575" target="_blank"
+                            class="plan-btn plan-btn-outline interactive"
+                            style="display: flex; align-items: center; gap: 0.5rem;">
                             Quero este plano
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="7" y1="17" x2="17" y2="7" />
                                 <polyline points="7 7 17 7 17 17" />
                             </svg>
@@ -2051,11 +2099,15 @@
                         <h3 class="plan-title">Sistemas & SaaS</h3>
                         <div class="plan-sub">Full-Stack</div>
                         <p class="plan-desc">
-                            Precisa de login, área de membros ou painel de controle interno? Construo sistemas robustos com banco de dados escalável (Supabase), prontos para a sua operação rodar 100% online.
+                            Precisa de login, área de membros ou painel de controle interno? Construo sistemas robustos
+                            com banco de dados escalável (Supabase), prontos para a sua operação rodar 100% online.
                         </p>
-                        <a href="https://wa.me/5551994416575" target="_blank" class="plan-btn plan-btn-outline interactive" style="display: flex; align-items: center; gap: 0.5rem;">
+                        <a href="https://wa.me/5551994416575" target="_blank"
+                            class="plan-btn plan-btn-outline interactive"
+                            style="display: flex; align-items: center; gap: 0.5rem;">
                             Quero este plano
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="7" y1="17" x2="17" y2="7" />
                                 <polyline points="7 7 17 7 17 17" />
                             </svg>
