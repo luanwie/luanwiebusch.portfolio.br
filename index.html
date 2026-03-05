@@ -63,7 +63,7 @@
             width: 100%;
             position: relative;
             cursor: none;
-            /* Hide default cursor */
+            -webkit-font-smoothing: antialiased;
         }
 
         /* Nuclear Option for horizontal scroll */
@@ -103,17 +103,17 @@
             /* Force GPU compositing */
         }
 
-        /* App Layout Container */
         #app {
             position: relative;
             z-index: 1;
-            /* Keep content above canvas */
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             width: 100%;
             overflow-x: hidden;
+            overflow-y: clip;
+            flex-direction: column;
         }
 
         /* Temporary Foundation Message */
@@ -581,6 +581,8 @@
             text-transform: uppercase;
             margin-bottom: 2.5rem;
             max-width: 100%;
+            padding-right: 8px;
+            /* space for text stroke to prevent H clipping */
         }
 
         .name-line {
@@ -1501,7 +1503,8 @@
                 overflow-wrap: normal;
                 hyphens: none;
                 white-space: normal;
-                overflow: visible !important;
+                padding-right: 6px;
+                /* Note: No 'overflow: visible' here to protect the viewport bounds on iOS! */
             }
 
             .name-line {
@@ -1521,7 +1524,7 @@
             }
 
             .projects-title {
-                font-size: clamp(1.8rem, 8vw, 2.5rem);
+                font-size: clamp(1.5rem, 8vw, 2.5rem);
                 word-break: keep-all;
                 overflow-wrap: normal;
                 hyphens: none;
@@ -1529,7 +1532,7 @@
             }
 
             .services-title {
-                font-size: clamp(1.8rem, 8vw, 2.5rem);
+                font-size: clamp(1.5rem, 8vw, 2.5rem);
                 word-break: keep-all;
                 overflow-wrap: normal;
                 hyphens: none;
@@ -1546,7 +1549,7 @@
             }
 
             .plans-title {
-                font-size: clamp(1.8rem, 8vw, 2.5rem);
+                font-size: clamp(1.5rem, 8vw, 2.5rem);
                 word-break: keep-all;
                 overflow-wrap: normal;
                 hyphens: none;
