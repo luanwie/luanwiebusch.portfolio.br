@@ -111,6 +111,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            width: 100%;
+            overflow-x: hidden;
         }
 
         /* Temporary Foundation Message */
@@ -1491,14 +1493,21 @@
             }
 
             .hero-name {
-                font-size: clamp(1.5rem, 8.5vw, 3.5rem);
+                font-size: clamp(1.5rem, 8vw, 2.5rem);
                 line-height: 1;
                 max-width: 100%;
-                word-wrap: break-word;
+                word-break: keep-all;
+                overflow-wrap: normal;
+                hyphens: none;
+                white-space: normal;
+                overflow: visible !important;
             }
 
             .name-line {
-                font-size: clamp(1.5rem, 8.5vw, 3.5rem);
+                font-size: clamp(1.5rem, 8vw, 2.5rem);
+                word-break: keep-all;
+                overflow-wrap: normal;
+                hyphens: none;
                 white-space: normal;
             }
 
@@ -1511,26 +1520,44 @@
             }
 
             .projects-title {
-                font-size: clamp(1.6rem, 7.5vw, 2.5rem);
+                font-size: clamp(1.8rem, 8vw, 2.5rem);
+                word-break: keep-all;
+                overflow-wrap: normal;
+                hyphens: none;
+                white-space: normal;
             }
 
             .services-title {
-                font-size: clamp(1.6rem, 7.5vw, 2.5rem);
+                font-size: clamp(1.8rem, 8vw, 2.5rem);
+                word-break: keep-all;
+                overflow-wrap: normal;
+                hyphens: none;
+                white-space: normal;
             }
 
             .cta-title {
-                font-size: clamp(1.8rem, 8.5vw, 3rem);
+                font-size: clamp(1.8rem, 8vw, 2.8rem);
                 max-width: 100%;
                 word-break: keep-all;
-                overflow-wrap: break-word;
+                overflow-wrap: normal;
+                hyphens: none;
+                white-space: normal;
             }
 
             .plans-title {
-                font-size: clamp(1.6rem, 7.5vw, 2.5rem);
+                font-size: clamp(1.8rem, 8vw, 2.5rem);
+                word-break: keep-all;
+                overflow-wrap: normal;
+                hyphens: none;
+                white-space: normal;
             }
 
             .intro-headline {
                 font-size: clamp(1.5rem, 7vw, 2rem);
+                word-break: keep-all;
+                overflow-wrap: normal;
+                hyphens: none;
+                white-space: normal;
             }
 
             .hero-sub {
@@ -1829,7 +1856,7 @@
 
             <section id="projects">
                 <div class="projects-header reveal">
-                    <div class="section-label">Portfolio</div>
+                    <div class="section-label">Portfólio</div>
                     <h2 class="projects-title">Trabalhos<br>Selecionados</h2>
                     <p class="projects-sub">Clique em qualquer projeto para vê-lo online</p>
                 </div>
@@ -2168,13 +2195,8 @@
                 <div class="cta-glow"></div>
                 <div class="cta-inner reveal">
                     <div class="section-label" style="justify-content: center; width: 100%;">
-                        <span style="display:flex; justify-content:center; width:100%; position:relative;">
-                            <span
-                                style="position:absolute; right:100%; margin-right: 0.75rem; top:50%; width:48px; height:1px; background:var(--purple-border);"></span>
-                            Vamos trabalhar juntos
-                            <span
-                                style="position:absolute; left:100%; margin-left: 0.75rem; top:50%; width:48px; height:1px; background:var(--purple-border);"></span>
-                        </span>
+                        <div style="width:48px; height:1px; background:var(--purple-border);"></div>
+                        <span>Vamos trabalhar juntos</span>
                     </div>
                     <h2 class="cta-title">
                         Tem um projeto<br>
