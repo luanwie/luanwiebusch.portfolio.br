@@ -52,6 +52,7 @@
         html {
             scroll-behavior: smooth;
             overflow-x: hidden;
+            max-width: 100%;
         }
 
         body {
@@ -61,8 +62,10 @@
             overflow-x: hidden !important;
             max-width: 100%;
             width: 100%;
+            min-width: 0;
             position: relative;
             cursor: none;
+            overscroll-behavior-x: none;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -93,6 +96,8 @@
             position: fixed;
             top: 0;
             left: 0;
+            right: 0;
+            bottom: 0;
             width: 100%;
             max-width: 100%;
             height: 100%;
@@ -386,6 +391,7 @@
             opacity: 0;
             transition: opacity 0.6s ease;
             width: 100%;
+            overflow-x: hidden;
         }
 
         #main-content.visible {
@@ -492,6 +498,8 @@
         .hero-video-wrap {
             position: absolute;
             inset: 0;
+            width: 100%;
+            max-width: 100%;
             z-index: 0;
             overflow: hidden;
             pointer-events: none;
@@ -501,6 +509,8 @@
             width: 100%;
             max-width: 100%;
             height: 100%;
+            min-width: 100%;
+            min-height: 100%;
             object-fit: cover;
             object-position: center;
             opacity: 0.22;
@@ -1493,26 +1503,34 @@
             #hero {
                 padding: 7rem 1.5rem 5rem;
                 overflow: hidden;
+                min-height: 100svh;
             }
 
             .hero-name {
-                font-size: clamp(1.5rem, 8vw, 2.5rem);
-                line-height: 1;
+                font-size: clamp(1.45rem, 7.4vw, 2.25rem);
+                line-height: 1.12;
                 max-width: 100%;
-                word-break: keep-all;
-                overflow-wrap: normal;
+                overflow: visible;
+                word-break: normal;
+                overflow-wrap: anywhere;
                 hyphens: none;
                 white-space: normal;
-                padding-right: 6px;
-                /* Note: No 'overflow: visible' here to protect the viewport bounds on iOS! */
+                letter-spacing: 0;
+                padding-right: 0;
             }
 
             .name-line {
-                font-size: clamp(1.5rem, 8vw, 2.5rem);
-                word-break: keep-all;
-                overflow-wrap: normal;
+                font-size: inherit;
+                line-height: inherit;
+                word-break: normal;
+                overflow-wrap: anywhere;
                 hyphens: none;
                 white-space: normal;
+                letter-spacing: 0;
+            }
+
+            .name-line.outline {
+                -webkit-text-stroke-width: 1px;
             }
 
             .hero-bg-glow {
@@ -1524,44 +1542,53 @@
             }
 
             .projects-title {
-                font-size: clamp(1.5rem, 8vw, 2.5rem);
-                word-break: keep-all;
-                overflow-wrap: normal;
+                font-size: clamp(1.5rem, 7.6vw, 2.35rem);
+                line-height: 1.06;
+                word-break: normal;
+                overflow-wrap: anywhere;
                 hyphens: none;
                 white-space: normal;
+                letter-spacing: 0;
             }
 
             .services-title {
-                font-size: clamp(1.5rem, 8vw, 2.5rem);
-                word-break: keep-all;
-                overflow-wrap: normal;
+                font-size: clamp(1.5rem, 7.6vw, 2.35rem);
+                line-height: 1.06;
+                word-break: normal;
+                overflow-wrap: anywhere;
                 hyphens: none;
                 white-space: normal;
+                letter-spacing: 0;
             }
 
             .cta-title {
-                font-size: clamp(1.8rem, 8vw, 2.8rem);
+                font-size: clamp(1.9rem, 8.5vw, 3.1rem);
+                line-height: 1.08;
                 max-width: 100%;
-                word-break: keep-all;
-                overflow-wrap: normal;
+                word-break: normal;
+                overflow-wrap: anywhere;
                 hyphens: none;
                 white-space: normal;
+                letter-spacing: 0;
             }
 
             .plans-title {
-                font-size: clamp(1.5rem, 8vw, 2.5rem);
-                word-break: keep-all;
-                overflow-wrap: normal;
+                font-size: clamp(1.5rem, 7.6vw, 2.35rem);
+                line-height: 1.06;
+                word-break: normal;
+                overflow-wrap: anywhere;
                 hyphens: none;
                 white-space: normal;
+                letter-spacing: 0;
             }
 
             .intro-headline {
-                font-size: clamp(1.5rem, 7vw, 2rem);
-                word-break: keep-all;
-                overflow-wrap: normal;
+                font-size: clamp(1.45rem, 7vw, 2rem);
+                word-break: normal;
+                overflow-wrap: anywhere;
                 hyphens: none;
                 white-space: normal;
+                letter-spacing: 0;
             }
 
             .hero-sub {
@@ -1572,11 +1599,15 @@
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 0.75rem;
+                max-width: 100%;
             }
 
             .btn-primary,
             .btn-ghost {
                 width: auto;
+                max-width: 100%;
+                text-align: center;
+                justify-content: center;
             }
 
             #about,
@@ -1614,8 +1645,12 @@
                 gap: 2rem;
             }
 
-            .cta-title {
-                font-size: clamp(2.2rem, 10vw, 4rem);
+            .reveal-left {
+                transform: translateY(40px);
+            }
+
+            .reveal-left.visible {
+                transform: translateY(0);
             }
 
             .cta-sub {
@@ -1638,6 +1673,10 @@
         .ambient-layer {
             position: fixed;
             inset: 0;
+            width: 100%;
+            max-width: 100%;
+            height: 100%;
+            overflow: hidden;
             z-index: 0;
             pointer-events: none;
             transition: background 1.8s ease;
@@ -1649,7 +1688,9 @@
             z-index: 0;
             pointer-events: none;
             opacity: 1;
+            width: 100%;
             max-width: 100%;
+            height: 100%;
             display: block;
         }
 
@@ -2313,15 +2354,28 @@
         let particles = [];
         const particleCount = 80;
 
+        const getViewportSize = () => ({
+            width: Math.max(1, Math.ceil(document.documentElement.clientWidth || window.visualViewport?.width || window.innerWidth)),
+            height: Math.max(1, Math.ceil(window.visualViewport?.height || window.innerHeight))
+        });
+
+        const onViewportResize = (callback) => {
+            window.addEventListener('resize', callback);
+            if (window.visualViewport) {
+                window.visualViewport.addEventListener('resize', callback);
+            }
+        };
+
         // Handle canvas sizing
         const resizeCanvas = () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            const { width, height } = getViewportSize();
+            canvas.width = width;
+            canvas.height = height;
             // Best practice: re-initialize if you want particles evenly distributed on window resize, 
             // but for subtle ambient particles leaving them is fine.
         };
 
-        window.addEventListener('resize', resizeCanvas);
+        onViewportResize(resizeCanvas);
         resizeCanvas();
 
         class Particle {
@@ -2389,18 +2443,19 @@
         const linesCanvas = document.getElementById('ambientLines');
         const lctx = linesCanvas.getContext('2d');
 
-        linesCanvas.width = window.innerWidth;
-        linesCanvas.height = window.innerHeight;
+        const resizeLinesCanvas = () => {
+            const { width, height } = getViewportSize();
+            linesCanvas.width = width;
+            linesCanvas.height = height;
+        };
 
-        window.addEventListener('resize', () => {
-            linesCanvas.width = window.innerWidth;
-            linesCanvas.height = window.innerHeight;
-        });
+        resizeLinesCanvas();
+        onViewportResize(resizeLinesCanvas);
 
         // 5 long slow-moving line segments
         const ambientLinesList = Array.from({ length: 5 }, (_, i) => ({
-            x: Math.random() * window.innerWidth,
-            y: Math.random() * window.innerHeight,
+            x: Math.random() * linesCanvas.width,
+            y: Math.random() * linesCanvas.height,
             angle: (Math.PI / 4) + (Math.random() * 0.5 - 0.25),
             length: 200 + Math.random() * 400,
             speed: 0.08 + Math.random() * 0.12,
